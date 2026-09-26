@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000" role="img" aria-label="FitLog barbell banner">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0" stop-color="#1a1a1f" />
+      <stop offset="0.55" stop-color="#101014" />
+      <stop offset="1" stop-color="#08080a" />
+    </linearGradient>
+    <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ccff00" stop-opacity="0.22" />
+      <stop offset="1" stop-color="#ccff00" stop-opacity="0" />
+    </linearGradient>
+    <linearGradient id="bar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#8fa800" />
+      <stop offset="0.5" stop-color="#ccff00" />
+      <stop offset="1" stop-color="#8fa800" />
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.42" r="0.6">
+      <stop offset="0" stop-color="#ccff00" stop-opacity="0.28" />
+      <stop offset="1" stop-color="#ccff00" stop-opacity="0" />
+    </radialGradient>
+    <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+      <path d="M50 0H0V50" fill="none" stroke="#ffffff" stroke-opacity="0.05" stroke-width="1" />
+    </pattern>
+    <pattern id="dots" width="16" height="16" patternUnits="userSpaceOnUse">
+      <circle cx="3" cy="3" r="1.6" fill="#ccff00" fill-opacity="0.35" />
+    </pattern>
+    <clipPath id="frame">
+      <rect x="0" y="0" width="800" height="1000" />
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#frame)">
+    <rect width="800" height="1000" fill="url(#bg)" />
+    <rect width="800" height="1000" fill="url(#grid)" />
+    <ellipse cx="400" cy="420" rx="420" ry="360" fill="url(#glow)" />
+
+    <!-- light beams -->
+    <path d="M120 0 L300 0 L120 1000 L-40 1000 Z" fill="url(#beam)" />
+    <path d="M560 0 L640 0 L470 1000 L390 1000 Z" fill="url(#beam)" opacity="0.7" />
+
+    <!-- oversized lime ring -->
+    <circle cx="400" cy="430" r="268" fill="none" stroke="#ccff00" stroke-opacity="0.18" stroke-width="2" />
+    <circle cx="400" cy="430" r="212" fill="none" stroke="#ccff00" stroke-opacity="0.12" stroke-width="1.5" stroke-dasharray="10 14" />
+
+    <!-- barbell -->
+    <g>
+      <!-- bar -->
+      <rect x="118" y="418" width="564" height="24" rx="12" fill="url(#bar)" />
+      <!-- knurling -->
+      <g opacity="0.5">
+        <rect x="200" y="418" width="4" height="24" fill="#0a0f00" />
+        <rect x="232" y="418" width="4" height="24" fill="#0a0f00" />
+        <rect x="264" y="418" width="4" height="24" fill="#0a0f00" />
+        <rect x="532" y="418" width="4" height="24" fill="#0a0f00" />
+        <rect x="564" y="418" width="4" height="24" fill="#0a0f00" />
+        <rect x="596" y="418" width="4" height="24" fill="#0a0f00" />
+      </g>
+
+      <!-- collar -->
+      <rect x="146" y="392" width="20" height="76" rx="6" fill="#d8d8dd" />
+      <rect x="634" y="392" width="20" height="76" rx="6" fill="#d8d8dd" />
+
+      <!-- outer plates -->
+      <g>
+        <rect x="60" y="336" width="70" height="188" rx="26" fill="#1f1f25" stroke="#3a3a41" stroke-width="3" />
+        <rect x="74" y="368" width="42" height="124" rx="18" fill="#0d0d10" stroke="#ccff00" stroke-opacity="0.5" stroke-width="2" />
+      </g>
+      <g>
+        <rect x="670" y="336" width="70" height="188" rx="26" fill="#1f1f25" stroke="#3a3a41" stroke-width="3" />
+        <rect x="684" y="368" width="42" height="124" rx="18" fill="#0d0d10" stroke="#ccff00" stroke-opacity="0.5" stroke-width="2" />
+      </g>
+
+      <!-- inner plates -->
+      <rect x="112" y="366" width="34" height="128" rx="12" fill="#2a2a31" />
+      <rect x="654" y="366" width="34" height="128" rx="12" fill="#2a2a31" />
+    </g>
+
+    <!-- plate face marks -->
+    <g opacity="0.5" fill="#ccff00">
+      <circle cx="95" cy="430" r="5" />
+      <circle cx="705" cy="430" r="5" />
+    </g>
+
+    <!-- halftone block -->
+    <rect x="0" y="770" width="800" height="230" fill="url(#dots)" opacity="0.5" />
+    <rect x="0" y="770" width="800" height="230" fill="#08080a" opacity="0.35" />
+
+    <!-- frame rules -->
+    <rect x="0" y="0" width="800" height="1000" fill="none" stroke="#26262b" stroke-width="2" />
+    <rect x="56" y="56" width="688" height="888" fill="none" stroke="#ccff00" stroke-opacity="0.25" stroke-width="2" />
+  </g>
+</svg>
