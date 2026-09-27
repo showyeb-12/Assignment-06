@@ -28,7 +28,7 @@ const SITE_DESCRIPTION =
   "FitLog is a dark, no-nonsense gym companion: pick a lift, lock it into today's plan, and watch the week's work add up.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://fitlog-workout-library.vercel.app"),
+  metadataBase: new URL("https://assignment-06-swab.vercel.app"),
   title: {
     default: "FitLog — Workout Library. Train hard, log honest.",
     template: "%s | FitLog",
@@ -61,7 +61,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <AppProviders>
           <a
             href="#main"
-            className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[200] focus:rounded-lg focus:bg-accent focus:px-4 focus:py-2 focus:font-semibold focus:text-accent-ink"
+            className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-200 focus:rounded-lg focus:bg-accent focus:px-4 focus:py-2 focus:font-semibold focus:text-accent-ink"
           >
             Skip to content
           </a>

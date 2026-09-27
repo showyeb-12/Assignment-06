@@ -9,6 +9,8 @@ then lock it into **today's plan** — capped at five lifts so you actually fini
 Built with the Next.js App Router, Tailwind CSS v4 and TypeScript, with every piece of state
 (plan, saved, completed lifts) persisted in `localStorage`.
 
+**Live:** https://assignment-06-swab.vercel.app · **Code:** https://github.com/showyeb-12/Assignment-06
+
 ---
 
 ## Screenshots
