@@ -1,5 +1,11 @@
+"use client";
+
 import Image from "next/image";
-import { ArrowDown, Dumbbell, Flame, Layers } from "lucide-react";
+import Link from "next/link";
+import { ArrowDown, Dumbbell, Flame, Layers, Play } from "lucide-react";
+import { useWorkouts } from "@/lib/useWorkouts";
+import { WorkoutImage } from "@/components/ui/WorkoutImage";
+import { toDisplayName } from "@/lib/format";
 
 const MARKS = [
   { icon: Layers, label: "12 curated lifts" },
@@ -7,8 +13,17 @@ const MARKS = [
   { icon: Dumbbell, label: "Plan, log, repeat" },
 ];
 
-/** Above-the-fold banner. The CTA is a plain in-page anchor to #library. */
+/**
+ * Above-the-fold banner. The CTA is a plain in-page anchor to #library.
+ *
+ * The artwork is a real lift from the library so the hero stays in sync with
+ * the data; `public/hero-banner.svg` covers the first paint and any failure.
+ */
 export function Hero() {
+  const { workouts } = useWorkouts({ minLoadingMs: 0 });
+
+  const featured = workouts.find((workout) => workout.id === 1) ?? workouts[0];
+
   return (
     <section className="relative overflow-hidden border-b border-line">
       {/* Ambient lime glow */}
@@ -53,12 +68,12 @@ export function Hero() {
               />
             </a>
 
-            <a
+            <Link
               href="/my-plan"
               className="inline-flex items-center gap-2 rounded-xl border border-line-strong px-6 py-4 font-display text-base font-semibold uppercase tracking-[0.12em] text-bone transition-colors hover:border-accent hover:text-accent"
             >
               My Plan
-            </a>
+            </Link>
           </div>
 
           <ul className="mt-10 flex flex-wrap items-center gap-x-7 gap-y-3 border-t border-line pt-7">
@@ -74,36 +89,90 @@ export function Hero() {
         {/* Banner image */}
         <div className="relative animate-fade-up [animation-delay:120ms]">
           <div className="relative overflow-hidden rounded-3xl border border-line-strong bg-surface">
-            <Image
-              src="/hero-banner.svg"
-              alt="Illustration of a loaded barbell ready for a session"
-              fill
-              unoptimized
-              preload
-              sizes="(max-width: 1024px) 100vw, 45vw"
-              className="object-cover"
-            />
+            {featured ? (
+              <WorkoutImage
+                key={featured.image}
+                src={featured.image}
+                alt={`${featured.name} illustration`}
+                sizes="(max-width: 1024px) 100vw, 45vw"
+                preload
+                className="aspect-[4/5] w-full animate-fade-up sm:aspect-[16/11] lg:aspect-[4/5]"
+                imageClassName="object-cover"
+              />
+            ) : (
+              <Image
+                src="/hero-banner.svg"
+                alt="Illustration of a loaded barbell ready for a session"
+                fill
+                unoptimized
+                preload
+                sizes="(max-width: 1024px) 100vw, 45vw"
+                className="object-cover"
+              />
+            )}
+
             <span
               aria-hidden
-              className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-ink via-ink/60 to-transparent"
+              className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-ink via-ink/50 to-transparent"
             />
+
+            {/* Caption strip */}
+            {featured && (
+              <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-5 sm:p-6">
+                <div className="min-w-0">
+                  <p className="font-mono text-[0.6rem] uppercase tracking-[0.3em] text-accent">
+                    Featured lift
+                  </p>
+                  <p className="mt-1 truncate font-display text-xl font-bold uppercase tracking-wide text-bone sm:text-2xl">
+                    {toDisplayName(featured.name)}
+                  </p>
+                </div>
+                <span className="grid size-11 shrink-0 place-items-center rounded-full bg-accent text-accent-ink">
+                  <Play className="size-4 translate-x-[1px]" aria-hidden />
+                </span>
+              </div>
+            )}
+
             <span
               aria-hidden
-              className="absolute inset-x-6 bottom-6 h-1 rounded-full bg-accent/80"
+              className="absolute inset-x-6 bottom-0 h-1 rounded-full bg-accent/80"
             />
           </div>
 
-          {/* Floating stat chip */}
-          <div className="absolute -bottom-5 left-4 flex items-center gap-3 rounded-2xl border border-line bg-ink-raised/95 px-5 py-3.5 shadow-[0_20px_45px_-20px_rgba(0,0,0,0.9)] backdrop-blur sm:left-8">
-            <span className="font-display text-3xl font-bold leading-none text-accent tnum">
-              12
-            </span>
-            <span className="font-mono text-[0.6rem] uppercase leading-tight tracking-[0.2em] text-muted">
-              Lifts
-              <br />
-              in the library
-            </span>
-          </div>
+          {/* Floating feature card — a real lift, ready to plan */}
+          {featured ? (
+            <Link
+              href={`/workouts/${featured.id}`}
+              className="group absolute -bottom-6 left-4 flex items-center gap-3 rounded-2xl border border-line bg-ink-raised/95 p-3 pr-5 shadow-[0_20px_45px_-20px_rgba(0,0,0,0.9)] backdrop-blur transition-colors hover:border-accent sm:-left-6"
+            >
+              <WorkoutImage
+                src={featured.image}
+                alt=""
+                sizes="64px"
+                className="size-14 shrink-0 rounded-xl"
+              />
+              <span className="flex flex-col">
+                <span className="font-mono text-[0.55rem] uppercase tracking-[0.25em] text-faint">
+                  Start today
+                </span>
+                <span className="font-display text-lg font-bold uppercase leading-tight tracking-wide text-bone transition-colors group-hover:text-accent">
+                  {featured.duration} min · {featured.caloriesBurned} kcal
+                </span>
+                <span className="text-xs text-muted">Tap for the full breakdown</span>
+              </span>
+            </Link>
+          ) : (
+            <div className="absolute -bottom-5 left-4 flex items-center gap-3 rounded-2xl border border-line bg-ink-raised/95 px-5 py-3.5 shadow-[0_20px_45px_-20px_rgba(0,0,0,0.9)] backdrop-blur sm:left-8">
+              <span className="font-display text-3xl font-bold leading-none text-accent tnum">
+                12
+              </span>
+              <span className="font-mono text-[0.6rem] uppercase leading-tight tracking-[0.2em] text-muted">
+                Lifts
+                <br />
+                in the library
+              </span>
+            </div>
+          )}
         </div>
       </div>
     </section>

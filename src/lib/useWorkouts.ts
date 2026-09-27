@@ -22,8 +22,14 @@ const MIN_VISIBLE_LOADING_MS = 650;
 /**
  * Loads the library in the browser so the loading state is a real, observable
  * part of the UX rather than a build-time artifact.
+ *
+ * `minLoadingMs` guards against a jarring instant swap: the library wants the
+ * default so the skeleton is always perceivable, the hero passes 0 because it
+ * paints over existing artwork.
  */
-export function useWorkouts(): WorkoutsState {
+export function useWorkouts({
+  minLoadingMs = MIN_VISIBLE_LOADING_MS,
+}: { minLoadingMs?: number } = {}): WorkoutsState {
   const [workouts, setWorkouts] = useState<Workout[]>([]);
   const [status, setStatus] = useState<Status>("loading");
   const [error, setError] = useState<string | null>(null);
@@ -45,7 +51,7 @@ export function useWorkouts(): WorkoutsState {
         const data: unknown = await response.json();
         if (!Array.isArray(data)) throw new Error("Unexpected response shape");
 
-        const delay = Math.max(0, MIN_VISIBLE_LOADING_MS - (Date.now() - startedAt));
+        const delay = Math.max(0, minLoadingMs - (Date.now() - startedAt));
         window.setTimeout(() => {
           if (cancelled) return;
           setWorkouts(data as Workout[]);
@@ -61,7 +67,7 @@ export function useWorkouts(): WorkoutsState {
     return () => {
       cancelled = true;
     };
-  }, [attempt]);
+  }, [attempt, minLoadingMs]);
 
   /* Keep previously saved/plan records in step with the freshest payload. */
   useEffect(() => {
